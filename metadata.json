@@ -1,0 +1,7 @@
+{
+  "name": "Afar-RHB Inventory Management System",
+  "description": "A comprehensive inventory and asset management system for AfarRHB, covering items, vehicles, employees, and operational workflows.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
