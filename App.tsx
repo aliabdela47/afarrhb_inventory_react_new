@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
+import ErrorBoundary from './components/ErrorBoundary';
 import { ConfirmationProvider } from './contexts/ConfirmationContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 
@@ -162,13 +163,15 @@ const AppRoutes = () => {
 
 function App() {
   return (
-    <ConfirmationProvider>
-      <HashRouter>
-        <AuthProvider>
-          <AppRoutes />
-        </AuthProvider>
-      </HashRouter>
-    </ConfirmationProvider>
+    <ErrorBoundary>
+      <ConfirmationProvider>
+        <HashRouter>
+          <AuthProvider>
+            <AppRoutes />
+          </AuthProvider>
+        </HashRouter>
+      </ConfirmationProvider>
+    </ErrorBoundary>
   );
 }
 
