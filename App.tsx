@@ -1,53 +1,66 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
-import LoginPage from './pages/auth/LoginPage';
-import SignUpPage from './pages/auth/SignUpPage';
+import ErrorBoundary from './components/ErrorBoundary';
 import { ConfirmationProvider } from './contexts/ConfirmationContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 
-// Page Imports
-import DashboardPage from './pages/dashboard/DashboardPage';
-import ItemsListPage from './pages/items/ItemsListPage';
-import ItemFormPage from './pages/items/ItemFormPage';
-import ItemViewPage from './pages/items/ItemViewPage';
-import CategoriesListPage from './pages/categories/CategoriesListPage';
-import CategoryFormPage from './pages/categories/CategoryFormPage';
-import CategoryViewPage from './pages/categories/CategoryViewPage';
-import WarehousesListPage from './pages/warehouses/WarehousesListPage';
-import WarehouseFormPage from './pages/warehouses/WarehouseFormPage';
-import WarehouseViewPage from './pages/warehouses/WarehouseViewPage';
-import EmployeesListPage from './pages/employees/EmployeesListPage';
-import EmployeeFormPage from './pages/employees/EmployeeFormPage';
-import EmployeeViewPage from './pages/employees/EmployeeViewPage';
-import DirectoratesListPage from './pages/directorates/DirectoratesListPage';
-import DirectorateFormPage from './pages/directorates/DirectorateFormPage';
-import DirectorateViewPage from './pages/directorates/DirectorateViewPage';
-import CustomersListPage from './pages/customers/CustomersListPage';
-import CustomerFormPage from './pages/customers/CustomerFormPage';
-import CustomerViewPage from './pages/customers/CustomerViewPage';
-import RequestsListPage from './pages/requests/RequestsListPage';
-import RequestFormPage from './pages/requests/RequestFormPage';
-import RequestViewPage from './pages/requests/RequestViewPage';
-import IssuancesListPage from './pages/issuances/IssuancesListPage';
-import IssuanceFormPage from './pages/issuances/IssuanceFormPage';
-import IssuanceViewPage from './pages/issuances/IssuanceViewPage';
-import VehiclesListPage from './pages/vehicles/VehiclesListPage';
-import VehicleFormPage from './pages/vehicles/VehicleFormPage';
-import VehicleViewPage from './pages/vehicles/VehicleViewPage';
-import VehicleAssignmentsListPage from './pages/vehicles/VehicleAssignmentsListPage';
-import VehicleAssignmentFormPage from './pages/vehicles/VehicleAssignmentFormPage';
-import VehicleAssignmentViewPage from './pages/vehicles/VehicleAssignmentViewPage';
-import VehicleServicesListPage from './pages/vehicles/VehicleServicesListPage';
-import VehicleServiceFormPage from './pages/vehicles/VehicleServiceFormPage';
-import VehicleServiceViewPage from './pages/vehicles/VehicleServiceViewPage';
-import VehicleGaragesListPage from './pages/vehicles/VehicleGaragesListPage';
-import VehicleGarageFormPage from './pages/vehicles/VehicleGarageFormPage';
-import VehicleGarageViewPage from './pages/vehicles/VehicleGarageViewPage';
-import VehicleCheckinPage from './pages/tracking/VehicleCheckinPage';
-import VehicleTrackingPage from './pages/tracking/VehicleTrackingPage';
-import AuditLogsPage from './pages/auditlogs/AuditLogsPage';
-import SettingsPage from './pages/settings/SettingsPage';
+// Auth pages - loaded immediately
+import LoginPage from './pages/auth/LoginPage';
+import SignUpPage from './pages/auth/SignUpPage';
+
+// Lazy load all other pages for code splitting
+const DashboardPage = lazy(() => import('./pages/dashboard/DashboardPage'));
+const ItemsListPage = lazy(() => import('./pages/items/ItemsListPage'));
+const ItemFormPage = lazy(() => import('./pages/items/ItemFormPage'));
+const ItemViewPage = lazy(() => import('./pages/items/ItemViewPage'));
+const CategoriesListPage = lazy(() => import('./pages/categories/CategoriesListPage'));
+const CategoryFormPage = lazy(() => import('./pages/categories/CategoryFormPage'));
+const CategoryViewPage = lazy(() => import('./pages/categories/CategoryViewPage'));
+const WarehousesListPage = lazy(() => import('./pages/warehouses/WarehousesListPage'));
+const WarehouseFormPage = lazy(() => import('./pages/warehouses/WarehouseFormPage'));
+const WarehouseViewPage = lazy(() => import('./pages/warehouses/WarehouseViewPage'));
+const EmployeesListPage = lazy(() => import('./pages/employees/EmployeesListPage'));
+const EmployeeFormPage = lazy(() => import('./pages/employees/EmployeeFormPage'));
+const EmployeeViewPage = lazy(() => import('./pages/employees/EmployeeViewPage'));
+const DirectoratesListPage = lazy(() => import('./pages/directorates/DirectoratesListPage'));
+const DirectorateFormPage = lazy(() => import('./pages/directorates/DirectorateFormPage'));
+const DirectorateViewPage = lazy(() => import('./pages/directorates/DirectorateViewPage'));
+const CustomersListPage = lazy(() => import('./pages/customers/CustomersListPage'));
+const CustomerFormPage = lazy(() => import('./pages/customers/CustomerFormPage'));
+const CustomerViewPage = lazy(() => import('./pages/customers/CustomerViewPage'));
+const RequestsListPage = lazy(() => import('./pages/requests/RequestsListPage'));
+const RequestFormPage = lazy(() => import('./pages/requests/RequestFormPage'));
+const RequestViewPage = lazy(() => import('./pages/requests/RequestViewPage'));
+const IssuancesListPage = lazy(() => import('./pages/issuances/IssuancesListPage'));
+const IssuanceFormPage = lazy(() => import('./pages/issuances/IssuanceFormPage'));
+const IssuanceViewPage = lazy(() => import('./pages/issuances/IssuanceViewPage'));
+const VehiclesListPage = lazy(() => import('./pages/vehicles/VehiclesListPage'));
+const VehicleFormPage = lazy(() => import('./pages/vehicles/VehicleFormPage'));
+const VehicleViewPage = lazy(() => import('./pages/vehicles/VehicleViewPage'));
+const VehicleAssignmentsListPage = lazy(() => import('./pages/vehicles/VehicleAssignmentsListPage'));
+const VehicleAssignmentFormPage = lazy(() => import('./pages/vehicles/VehicleAssignmentFormPage'));
+const VehicleAssignmentViewPage = lazy(() => import('./pages/vehicles/VehicleAssignmentViewPage'));
+const VehicleServicesListPage = lazy(() => import('./pages/vehicles/VehicleServicesListPage'));
+const VehicleServiceFormPage = lazy(() => import('./pages/vehicles/VehicleServiceFormPage'));
+const VehicleServiceViewPage = lazy(() => import('./pages/vehicles/VehicleServiceViewPage'));
+const VehicleGaragesListPage = lazy(() => import('./pages/vehicles/VehicleGaragesListPage'));
+const VehicleGarageFormPage = lazy(() => import('./pages/vehicles/VehicleGarageFormPage'));
+const VehicleGarageViewPage = lazy(() => import('./pages/vehicles/VehicleGarageViewPage'));
+const VehicleCheckinPage = lazy(() => import('./pages/tracking/VehicleCheckinPage'));
+const VehicleTrackingPage = lazy(() => import('./pages/tracking/VehicleTrackingPage'));
+const AuditLogsPage = lazy(() => import('./pages/auditlogs/AuditLogsPage'));
+const SettingsPage = lazy(() => import('./pages/settings/SettingsPage'));
+
+// Loading component for suspense fallback
+const LoadingFallback = () => (
+  <div className="flex items-center justify-center min-h-screen">
+    <div className="text-center">
+      <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary-600 border-r-transparent"></div>
+      <p className="mt-2 text-gray-600 dark:text-gray-400">Loading...</p>
+    </div>
+  </div>
+);
 
 const AppRoutes = () => {
   const { isAuthenticated } = useAuth();
@@ -64,7 +77,8 @@ const AppRoutes = () => {
 
   return (
     <Layout>
-      <Routes>
+      <Suspense fallback={<LoadingFallback />}>
+        <Routes>
         <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         
@@ -141,20 +155,23 @@ const AppRoutes = () => {
 
         {/* Fallback for authenticated users */}
         <Route path="*" element={<div className="p-6 text-xl">404 Not Found</div>} />
-      </Routes>
+        </Routes>
+      </Suspense>
     </Layout>
   );
 }
 
 function App() {
   return (
-    <ConfirmationProvider>
-      <HashRouter>
-        <AuthProvider>
-          <AppRoutes />
-        </AuthProvider>
-      </HashRouter>
-    </ConfirmationProvider>
+    <ErrorBoundary>
+      <ConfirmationProvider>
+        <HashRouter>
+          <AuthProvider>
+            <AppRoutes />
+          </AuthProvider>
+        </HashRouter>
+      </ConfirmationProvider>
+    </ErrorBoundary>
   );
 }
 
